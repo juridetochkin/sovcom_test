@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+        <h1>{% block header %}Главная страница{% endblock %}</h1>
+        <h3>
+            <a href="{% url 'apps_list' %}">Все заявки</a><br>
+            <a href="{% url 'clients_list' %}">Все клиенты</a><br>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'change_log' %}">История опреаций над данными</a>
+            {% endif %}
+        </h3>
+    {% elif not request.user.is_authenticated %}
+        <h3>
+            Зарегистрируйтесь, авторизуйтесь, или обратитесь к администратору.
+        </h3>
+    {% else %}
+        Обратитесь к администратору.
+    {% endif %}
+
+{% endblock %}

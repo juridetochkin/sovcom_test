@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+    {% if client %}
+        <h1>Редактирование данных клиента № {{ client.pk }}</h1>
+        <form method="post" action="{% url "clients_update" client.pk %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form layout='grid' %}
+            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+        </form>
+    {% else %}
+        <h1>Регистрация нового клиента</h1>
+        <form method="post" action="{% url "clients_create" %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form layout='grid' %}
+            {% bootstrap_button "Добавить" button_type="submit" button_class="btn-primary" %}
+        </form>
+    {% endif %}
+{% endblock %}

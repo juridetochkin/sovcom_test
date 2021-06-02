@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: justify-all;
+            padding: 8px;
+            word-wrap: break-word;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+    <title>{% block title %}Совком Тест{% endblock %}</title>
+</head>
+
+<body>
+{% include 'nav.html' %}
+<main>
+    <div></div>
+    {% block content %}
+    {% endblock %}
+</main>
+</body>
+
+</html>
