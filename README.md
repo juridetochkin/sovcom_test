@@ -34,12 +34,12 @@ http://188.166.116.47:8000/ <br>
 <h4>Написать скрипты для следующего анализа:
 1) Определить количество заявок в каждом месяце.
 
-- <code>SELECT date_part('year', date_created) AS год, <br>
+- SELECT date_part('year', date_created) AS год, <br>
         date_part('month', date_created) AS месяц, <br>
         COUNT(*) AS "Кол-во заявок" <br>
         FROM credit_app_application <br>
         GROUP BY год, месяц <br>
-        ORDER BY год, месяц DESC;</code>
+        ORDER BY год, месяц DESC;
   
 
 2) Определить последнюю заявку по клиенту.
