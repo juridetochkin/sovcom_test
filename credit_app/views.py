@@ -4,7 +4,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.views.generic.edit import ModelFormMixin
 
 from django_filters.views import FilterView
-from django_tables2 import SingleTableMixin, MultiTableMixin
+from django_tables2 import SingleTableMixin
 from django_tables2.export.views import ExportMixin
 from login_required import login_not_required
 
