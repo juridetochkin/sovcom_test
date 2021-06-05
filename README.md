@@ -31,27 +31,46 @@ http://188.166.116.47:8000/ <br>
 
 <h2> Вторая часть задания: </h2>
 
-<h4>Написать скрипты для следующего анализа:<br><br>
+<h3>Написать скрипты для следующего анализа:</h3><br>
 
-1) Определить количество заявок в каждом месяце.
+<h4>1) Определить количество заявок в каждом месяце.</h4>
 
 - SELECT date_part('year', date_created) AS "Год", <br>
         date_part('month', date_created) AS "Месяц", <br>
-        COUNT(*) AS "Кол-во заявок" <br>
-        FROM credit_app_application <br>
-        GROUP BY "Год", "Месяц" <br>
-        ORDER BY "Год", "Месяц" DESC;
+  COUNT(*) AS "Кол-во заявок" <br>
+  FROM credit_app_application <br>
+  GROUP BY "Год", "Месяц" <br>
+  ORDER BY "Год", "Месяц" DESC;
   
 
-2) Определить последнюю заявку по клиенту.
+<h4>2) Определить последнюю заявку по клиенту.</h4>
 
-- <code>BLAH BLAH</code>
+-- Для клиента с ID = 1 <br>
+
+- SELECT *<br>
+  FROM credit_app_application<br>
+  WHERE client_id = 1<br>
+  ORDER BY date_created DESC LIMIT 1<br>
+  
+-- Или следующая комманда, если хотим получить ID последней заявки по каждому клиенту из БД: <br>
+ 
+- SELECT id AS "Клиент",<br>
+(<br>
+  SELECT id <br>
+  FROM credit_app_application AS P1 <br>
+  WHERE P1.client_id = P.id <br>
+  ORDER BY date_created DESC LIMIT 1<br>
+  ) <br>
+  AS " Номер последней заявки"<br>
+FROM credit_app_client AS P<br>
+GROUP BY id<br>
+ORDER BY id<br>
   
 
-3) Определить клиентов, по которым были заведены заявки на другой продукт после одобрения.
+<h4>3) Определить клиентов, по которым были заведены заявки на другой продукт после одобрения.</h4>
    
-- <code>BLAH BLAH</code></h4>
+- <code>BLAH BLAH</code>
 
-<h5>Все запросы написны для обращения к БД PostgreSQL.</h5>
+<h5>Все запросы написаны для обращения к БД PostgreSQL.</h5>
 
 <p></p>
