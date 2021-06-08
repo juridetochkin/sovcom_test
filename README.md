@@ -35,55 +35,64 @@ http://188.166.116.47:8000/ <br>
 
 <h4>1) Определить количество заявок в каждом месяце.</h4>
 
-- SELECT date_part('year', date_created) AS "Год", <br>
-        date_part('month', date_created) AS "Месяц", <br>
-  COUNT(*) AS "Кол-во заявок" <br>
-  FROM credit_app_application <br>
-  GROUP BY "Год", "Месяц" <br>
-  ORDER BY "Год", "Месяц" DESC;
-  
+<pre>
+SELECT 
+    date_part('year', date_created) AS "Год",
+    date_part('month', date_created) AS "Месяц",
+    COUNT(*) AS "Кол-во заявок"
+FROM credit_app_application
+GROUP BY "Год", "Месяц"
+ORDER BY "Год", "Месяц" DESC;
+</pre>
+
 
 <h4>2) Определить последнюю заявку по клиенту.</h4>
 
--- Для клиента с ID = 1 <br>
+- Для клиента с ID = 1 <br>
 
-- SELECT *<br>
-  FROM credit_app_application<br>
-  WHERE client_id = 1<br>
-  ORDER BY date_created DESC LIMIT 1<br>
+<pre>
+SELECT *
+FROM credit_app_application
+WHERE client_id = 1
+ORDER BY date_created DESC LIMIT 1
+</pre>
   
--- Или следующая комманда, если хотим получить ID последней заявки по каждому клиенту из БД: <br>
+- Или следующая комманда, если хотим получить ID последней заявки по каждому клиенту из БД: <br>
  
-- SELECT id AS "Номер Клиента",<br>
-(<br>
-  SELECT id <br>
-  FROM credit_app_application AS P1 <br>
-  WHERE P1.client_id = P.id <br>
-  ORDER BY date_created DESC LIMIT 1<br>
-  ) <br>
-  AS " Номер последней заявки"<br>
-FROM credit_app_client AS P<br>
-GROUP BY id<br>
-ORDER BY id<br>
+<pre>
+SELECT 
+    id AS "Номер Клиента",
+    (
+     SELECT id
+     FROM credit_app_application AS P1
+     WHERE P1.client_id = P.id
+     ORDER BY date_created DESC LIMIT 1
+     )
+       AS " Номер последней заявки"
+FROM credit_app_client AS P
+GROUP BY id
+ORDER BY id
+</pre>
   
 
 <h4>3) Определить клиентов, по которым были заведены заявки на другой продукт после одобрения.</h4>
-   
-<code> 
+
+<pre>
 SELECT
     DISTINCT credit_app_application.client_id AS "Номер Клиента"
 FROM 
     credit_app_application, 
     (
-	    SELECT *
-		FROM credit_app_application
-		WHERE decision = 'AP'
-	) AS Approved
+     SELECT *
+     FROM credit_app_application
+     WHERE decision = 'AP'
+      ) 
+        AS Approved
 WHERE 
     credit_app_application.client_id = Approved.client_id 
     AND credit_app_application.date_created > Approved.date_created
-	AND NOT credit_app_application.product = Approved.product
-</code>
+    AND NOT credit_app_application.product = Approved.product
+</pre>
 
 <h5>Все запросы написаны для обращения к БД PostgreSQL.</h5>
 
