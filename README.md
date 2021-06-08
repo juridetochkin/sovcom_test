@@ -54,7 +54,7 @@ http://188.166.116.47:8000/ <br>
   
 -- Или следующая комманда, если хотим получить ID последней заявки по каждому клиенту из БД: <br>
  
-- SELECT id AS "Клиент",<br>
+- SELECT id AS "Номер Клиента",<br>
 (<br>
   SELECT id <br>
   FROM credit_app_application AS P1 <br>
@@ -69,7 +69,21 @@ ORDER BY id<br>
 
 <h4>3) Определить клиентов, по которым были заведены заявки на другой продукт после одобрения.</h4>
    
-- <code>BLAH BLAH</code>
+<code> 
+SELECT
+    DISTINCT credit_app_application.client_id AS "Номер Клиента"
+FROM 
+    credit_app_application, 
+    (
+	    SELECT *
+		FROM credit_app_application
+		WHERE decision = 'AP'
+	) AS Approved
+WHERE 
+    credit_app_application.client_id = Approved.client_id 
+    AND credit_app_application.date_created > Approved.date_created
+	AND NOT credit_app_application.product = Approved.product
+</code>
 
 <h5>Все запросы написаны для обращения к БД PostgreSQL.</h5>
 
